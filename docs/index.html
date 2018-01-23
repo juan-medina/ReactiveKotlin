@@ -24,8 +24,227 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<div align="left">
+					  <h3>Reactive Microservices in Kotlin</h3>
+					  With Spring Framework 5 and Spring Boot 2.0<br/>
+					</div>
+					<br>
+					<div align="right"><small>Juan Antonio Medina Iglesias</small></div>
+				</section>
+				<section>
+					<section>
+					<h3>Three Years ago I was a manager</h3>
+					that was only coding on my personal time
+					</section>
+
+					<section>
+						<h3>I was disconnected from technology</h3>
+						except Excel, PowerPoint and Word
+					</section>
+
+					<section>
+						<h3>Transformation was happening</h3>
+						and I was not ready
+					</section>
+
+					<section>
+						<h3>Research time</h3>
+						forums, github, twitter, stackoverflow, YouTube
+					</section>
+
+					<section>
+						<h3>Conversations</h3>
+						yammer, slack, tech talks, conferences & a lot of coffee
+					</section>
+
+					<section>
+						<h3>Opportunity</h3>
+						solutioning and innovation
+					</section>
+
+					<section>
+						<h3>Building</h3>
+						a cloud native application
+					</section>
+
+					<section>
+						<h3>Upgrading coding skills</h3>
+						refreshing and learning technologies
+					</section>
+
+					<section>
+						<h3>Learning by Example</h3>
+						<a href="https://github.com/LearningByExample">https://github.com/LearningByExample</a>
+					</section>
+
+					<section>
+						<h3>Blog and Articles</h3>
+						<a href="https://juan-medina.com">https://juan-medina.com</a>
+					</section>
+
+					<section>
+						<h3>Kotlin mainstream language</h3>
+						<ul>
+							<li>Google's support for Kotlin in Android</li>
+							<li>Spring Framework 5 Kotlin extensions</li>
+							<li>Reactor Kotlin extensions</li>
+							<li>Spark Kotlin support</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Learning Kotlin</h3>
+						Microservices, Reactive, Native, Serverless
+					</section>
+
+					<section>
+						<h3>Packt Publishing want a book</h3>
+						about Microservices in Kotlin
+					</section>
+
+					<section >
+						<img src="img/challenge_accepted.jpg" width="60%"><br/>
+					</section>
+
+					<section>
+						<h3>Writing a book</h3>
+						is a life changing experience
+					</section>
+
+					<section >
+						<img src="img/know_nothing.jpg" width="60%"><br/>
+					</section>
+
+					<section>
+						<h3>There is never enough feedback</h3>
+						at least until you get more feedback
+					</section>
+
+					<section>
+						<h3>Finally the book is done done</h3>
+						or did mean done done done?
+					</section>
+
+					<section >
+						<img src="img/book_cover.png" width="40%"><br/>
+						<a href="https://www.packtpub.com/web-development/microservices-kotlin"><small>https://www.packtpub.com/web-development/microservices-kotlin</small></a>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>What is Kotlin?</h3>
+					</section>
+
+					<section>
+						<h3>A programming language</h3>
+						<ul>
+							<li>Created by JetBrains</li>
+							<li>Multi porpoise</li>
+							<li>C++/Java looks-like</li>
+							<li>Aims to Simplicity</li>
+							<li>Not a paradigm shift</li>
+							<li>Modern constructs</li>
+							<li>LLVM compiler</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Can produce code for</h3>
+						<ul>
+							<li>JVM</li>
+							<li>JavaScript</li>
+							<li>Native
+								<ul>
+									<li>applications</li>
+									<li>imports/export C libraries</li>
+									<li>WebAssembly</li>
+								</ul>
+							</li>
+						<li>Cross platform modules</li>
+						</ul>
+					</section>
+					<section>
+						<h3>How is look like</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">fun main(args : Array&lt;String&gt;) {
+  println("Hello, world!")
+}</code></pre>
+					</section>
+
+					<section>
+						<h3>Features</h3>
+						<ul>
+							<li>Null Safety</li>
+							<li>Type inference</li>
+							<li>Single expression functions</li>
+							<li>Default and named arguments</li>
+							<li>Data classes</li>
+							<li>High Level functions</li>
+							<li>Operators overriding</li>
+							<li>Type-Safe builders</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Null Safety</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">var a: String = "abc"
+a = null // compilation error
+
+var b: String? = "abc"
+b = null // ok
+
+val l = b?.length ?: -1
+</code></pre>
+					</section>
+
+					<section>
+						<h3>Type inference</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">val a = "abc"
+
+val b = 1
+
+val c = getData()
+</code></pre>
+					</section>
+
+					<section>
+						<h3>Single expression functions</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">fun sum(a : Int, b : Int) : Int = a + b
+
+fun sum2(a : Int, b : Int) = a + b
+
+fun bigger(a : Int, b : Int) = if (a>b) a else b
+
+val value = if (bigger(x, y)==x) z else 1-z
+
+val other = when(getValue(x, y)){
+	0, 1 -> 0
+	-1 -> y
+	else -> x
+}
+</code></pre>
+					</section>
+
+					<section>
+						<h3>Default and named arguments</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">fun displayBorder(character: Char = '=', length: Int = 15) {
+  for (i in 1..length) {
+    print(character)
+  }
+  println("")
+}
+
+fun main(args : Array&lt;String&gt;) {
+  displayBorder()           //print: ===============
+  displayBorder('*')        //print: ***************
+  displayBorder('*', 5)     //print: *****
+  displayBorder(length = 2) //print: ==
+}					</section>
+
+				</section>
+
 			</div>
 		</div>
 
@@ -37,6 +256,10 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+
+				// Push each slide change to the browser history
+				history: true,
+
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
