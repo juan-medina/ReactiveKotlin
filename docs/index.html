@@ -34,6 +34,10 @@
 				</section>
 				<section>
 					<section>
+					<h3>Hello, I'm Juan Medina</h3>
+					and I'm a Software engineer
+					</section>
+					<section>
 					<h3>Three Years ago I was a manager</h3>
 					that was only coding on my personal time
 					</section>
@@ -106,7 +110,7 @@
 					</section>
 					<section>
 						<h3>Finally the book is done done</h3>
-						or did mean done done done?
+						or did I mean done done done?
 					</section>
 					<section>
 						<img src="img/book_cover.png" width="40%"><br/>
@@ -151,17 +155,8 @@
 }</code></pre>
 					</section>
 					<section>
-						<h3>Features</h3>
-						<ul>
-							<li>Null Safety</li>
-							<li>Type inference</li>
-							<li>Single expression functions</li>
-							<li>Default and named arguments</li>
-							<li>Data classes</li>
-							<li>High Level functions</li>
-							<li>Operators overriding</li>
-							<li>Type-Safe builders</li>
-						</ul>
+						<h3>Kotlin provide several features</h3>
+						let's review some of them
 					</section>
 					<section>
 						<h3>Null Safety</h3>
@@ -180,6 +175,14 @@ val l = b?.length ?: -1</code></pre>
 val b = 1
 
 val c = getData()</code></pre>
+					</section>
+					<section>
+						<h3>String interpolation</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">val name = "Juan"
+
+println("My name is $name")
+
+println("My name length is ${name.length}"</code></pre>
 					</section>
 					<section>
 						<h3>Single expression functions</h3>
@@ -212,6 +215,62 @@ fun main(args : Array&lt;String&gt;) {
   displayBorder('*', 5)     //print: *****
   displayBorder(length = 2) //print: ==
 }</code></pre>
+					</section>
+					<section>
+						<h3>Data classes</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">data class User(val name: String = "", val age: Int = 0)</code></pre>
+					</section>
+					<section>
+						<h3>Extensions functions</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">fun MutableList&lt;Int&gt;.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+
+val l = mutableListOf(1, 2, 3)
+l.swap(0, 2) // the list will be (3, 2, 1)
+
+</code></pre>
+					</section>
+					<section>
+						<h3>Lambdas</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">strings.filter{
+	value : String -> value.length == 5
+}
+
+strings.filter{
+	value -> value.length == 5
+}
+
+strings.filter{ it.length == 5 }
+
+strings.filter{it.length == 5}.forEach{ println(it) }
+
+strings.filter{it.length == 5}.forEach(::println}
+
+</code></pre>
+					</section>
+					<section>
+						<h3>Type-Safe builders</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">fun result(args: Array&lt;String&gt;) =
+    html {
+        head {
+            title {+"XML encoding with Kotlin"}
+        }
+        body {
+            p  {+"this format can be used as an alternative markup"}
+
+            p {
+                for (arg in args)
+                    +arg
+            }
+        }
+    }</code></pre>
+					</section>
+					<section>
+						<h3>They are dozen of more features</h3>
+						for more details visit: <a href="https://kotlinlang.org/">https://kotlinlang.org/</a>
 					</section>
 				</section>
 				<section><h3>Reactive Revolution</h3></section>
