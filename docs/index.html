@@ -9,6 +9,8 @@
 		<link rel="Shortcut Icon" href="img/favicon.ico" type="image/x-icon"/>
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/fa-svg-with-js.css">
+		<link rel="stylesheet" href="css/extra.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -60,7 +62,7 @@
 					</section>
 					<section>
 						<h3>Conversations</h3>
-						yammer, slack, tech talks, conferences & a lot of coffee
+						yammer, slack, tech talks, conferences &amp; a lot of coffee
 					</section>
 					<section>
 						<h3>Opportunity</h3>
@@ -123,7 +125,7 @@
 					</section>
 					<section>
 						<h3>What I have learned</h3>
-						<blockquote><div alig="left">If you really <b>want</b> it, you <b>could</b> do it.</div></blockquote>
+						<blockquote><div alig="left">If you really <span class="fragment highlight-blue" data-fragment-index="1"><b>want</b></span> it, you <span class="fragment highlight-green" data-fragment-index="2"><b>could</b></span> do it.</div></blockquote>
 					</section>
 				</section>
 				<section>
@@ -291,7 +293,169 @@ strings.filter { it.length > 3 }.forEach(::println)</code></pre>
 						for more details visit: <a href="https://kotlinlang.org/">https://kotlinlang.org/</a>
 					</section>
 				</section>
-				<section><h3>Reactive Revolution</h3></section>
+				<section>
+					<section>
+						<h3>Reactive Revolution</h3>
+					</section>
+
+					<section>
+						<h3>non-reactive example</h3><br/>
+						<table class="empty">
+							<tr>
+								<td rowspan="2">
+									<span class="fragment highlight-green" data-fragment-index="9">
+										CLIENT
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="1">
+										<span class="fragment highlight-green" data-fragment-index="8">
+											<span class="fragment fade-out" data-fragment-index="9">
+												<i class="fa fa-arrow-alt-circle-right"></i>
+											</span>
+										</span>
+									</span>
+								</td>
+								<td rowspan="2">
+									<span class="fragment highlight-green" data-fragment-index="7">
+										SERVER
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="2">
+										<span class="fragment highlight-green" data-fragment-index="5">
+											<span class="fragment fade-out" data-fragment-index="6">
+											<i class="fa fa-arrow-alt-circle-right"></i>
+											</span>
+										</span>
+									</span>
+								</td>
+								<td rowspan="2">
+									<span class="fragment highlight-green" data-fragment-index="4">
+										DATABASE
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="fragment" data-fragment-index="6">
+										<span class="fragment highlight-green" data-fragment-index=8">
+											<span class="fragment fade-out" data-fragment-index="9">
+												<i class="fa fa-arrow-alt-circle-left"></i>
+											</span>
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="3">
+										<span class="fragment highlight-green" data-fragment-index="5">
+											<span class="fragment fade-out" data-fragment-index="6">
+												<i class="fa fa-arrow-alt-circle-left"></i>
+											</span>
+										</span>
+									</span>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<span class="fragment" data-fragment-index="10">
+							<ul>
+								<li>The client waits until everything is completed</li>
+								<li>No more request cant be handle in this thread</li>
+								<li>This is a blocking operation</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h3>reactive example</h3><br/>
+						<table class="empty">
+							<tr>
+								<td rowspan="2">
+									<span class="fragment highlight-blue" data-fragment-index="2">
+										<span class="fragment highlight-green" data-fragment-index="17">
+											CLIENT
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="1">
+											<span class="fragment fade-out" data-fragment-index="2">
+												<i class="fa fa-arrow-alt-circle-right" style="color: #1b91ff;"></i>
+											</span>
+										</span>
+									</span>
+								</td>
+								<td rowspan="2">
+									<span class="fragment highlight-blue" data-fragment-index="5">
+										<span class="fragment highlight-green" data-fragment-index="15">
+											SERVER
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="4">
+										<span class="fragment fade-out" data-fragment-index="5">
+										<i class="fa fa-arrow-alt-circle-right" style="color: #1b91ff;"></i>
+										</span>
+									</span>
+								</td>
+								<td rowspan="2">
+									<span class="fragment highlight-yellow" data-fragment-index="5">
+										<span class="fragment highlight-green" data-fragment-index="13">
+											DATABASE
+										</span>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="fragment" data-fragment-index="8">
+										<span class="fragment fade-out" data-fragment-index="9">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #ffff2c;"></i>
+										</span>
+									</span>
+									<span class="fragment" data-fragment-index="12">
+										<span class="fragment fade-out" data-fragment-index="13">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #ffff2c;"></i>
+										</span>
+									</span>
+									<span class="fragment" data-fragment-index="16">
+										<span class="fragment fade-out" data-fragment-index="17">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #17ff2e;"></i>
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="fragment" data-fragment-index="6">
+										<span class="fragment fade-out" data-fragment-index="7">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #ffff2c;"></i>
+										</span>
+									</span>
+									<span class="fragment" data-fragment-index="10">
+										<span class="fragment fade-out" data-fragment-index="11">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #ffff2c;"></i>
+										</span>
+									</span>
+									<span class="fragment" data-fragment-index="14">
+										<span class="fragment fade-out" data-fragment-index="15">
+											<i class="fa fa-arrow-alt-circle-left" style="color: #17ff2e;"></i>
+										</span>
+									</span>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<span class="fragment" data-fragment-index="20">
+							<ul>
+								<li>The client get data as soon as is available</li>
+								<li>We could process far more requests</li>
+								<li>This is a non-blocking operation</li>
+							</ul>
+						</span>
+					</section>
+
+				</section>
 				<section><h3>Reactive Microservice</h3></section>
 				<section><h1>Q &amp; A</h1><br/>
 					<a href="mailto:jamedina@gmail.com">jamedina@gmail.com</a><br/>
@@ -308,6 +472,7 @@ of this presentation you remember</div>
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
+		<script src="js/fontawesome-all.min.js"></script>
 
 		<script>
 			// More info about config & dependencies:
