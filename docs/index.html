@@ -4,8 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Reactive Microservices in Kotlin</title>
 
+		<link rel="Shortcut Icon" href="img/favicon.ico" type="image/x-icon"/>
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 
@@ -122,8 +123,7 @@
 					</section>
 					<section>
 						<h3>What I have learned</h3>
-						<blockquote><div alig="left">If you really <b>want</b> it, you <b>could</b> do it.</div>
-						<div align="right">Juan Medina</div></blockquote>
+						<blockquote><div alig="left">If you really <b>want</b> it, you <b>could</b> do it.</div></blockquote>
 					</section>
 				</section>
 				<section>
@@ -134,9 +134,8 @@
 						<h3>A programming language</h3>
 						<ul>
 							<li>Created by JetBrains</li>
-							<li>Multi porpoise</li>
 							<li>C++/Java looks-like</li>
-							<li>Aims to Simplicity</li>
+							<li>Concise</li>
 							<li>Not a paradigm shift</li>
 							<li>Modern constructs</li>
 							<li>LLVM compiler</li>
@@ -178,20 +177,24 @@ b = null // ok
 val l = b?.length ?: -1</code></pre>
 					</section>
 					<section>
+						<h3>Object Oriented</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">class Greeter(val name: String) {
+   fun greet() {
+      println("Hello, $name")
+   }
+}
+
+fun main(args: Array&lt;String&gt;) {
+   Greeter(args[0]).greet()
+}</code></pre>
+					</section>
+					<section>
 						<h3>Type inference</h3>
 						<pre><code class="kotlin" style="font-size: 18px;">val a = "abc"
 
 val b = 1
 
 val c = getData()</code></pre>
-					</section>
-					<section>
-						<h3>String interpolation</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">val name = "Juan"
-
-println("My name is $name")
-
-println("My name length is ${name.length}"</code></pre>
 					</section>
 					<section>
 						<h3>Single expression functions</h3>
@@ -227,7 +230,20 @@ fun main(args : Array&lt;String&gt;) {
 					</section>
 					<section>
 						<h3>Data classes</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">data class User(val name: String = "", val age: Int = 0)</code></pre>
+						<pre><code class="kotlin" style="font-size: 18px;">//  - equals() / hashCode()
+//  - toString() of the form "User(name=John, age=42)"
+//  - copy()
+//  - componentN() : component1() = name, component2() = age
+data class User(val name: String = "", val age: Int = 0)
+
+val user = User("John", "42")
+val olderUser = user.copy(age=50);
+
+val name, age = user;
+
+fun getUser() = User("John", "42")
+
+val userName, userAge = getUser()</code></pre>
 					</section>
 					<section>
 						<h3>Extensions functions</h3>
@@ -238,44 +254,37 @@ fun main(args : Array&lt;String&gt;) {
 }
 
 val l = mutableListOf(1, 2, 3)
-l.swap(0, 2) // the list will be (3, 2, 1)
-
-</code></pre>
+l.swap(0, 2) // the list will be (3, 2, 1)</code></pre>
 					</section>
 					<section>
 						<h3>Lambdas</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">strings.filter{
-	value : String -> value.length == 5
-}
+						<pre><code class="kotlin" style="font-size: 18px;">val strings = listOf("hello", "I'm", "a list", "of", "strings")
+
+strings.filter {
+	value : String -> value.length > 3
+}.forEach{ value : String -> println(value) }
 
 strings.filter{
-	value -> value.length == 5
-}
+	value -> value.length > 3
+}.forEach{ value -> println(value) }
 
-strings.filter{ it.length == 5 }
-
-strings.filter{it.length == 5}.forEach{ println(it) }
-
-strings.filter{it.length == 5}.forEach(::println}
-
-</code></pre>
+strings.filter { it.length > 3 }.forEach(::println}</code></pre>
 					</section>
 					<section>
 						<h3>Type-Safe builders</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">fun result(args: Array&lt;String&gt;) =
-    html {
-        head {
-            title {+"XML encoding with Kotlin"}
-        }
-        body {
-            p  {+"this format can be used as an alternative markup"}
-
-            p {
-                for (arg in args)
-                    +arg
-            }
-        }
-    }</code></pre>
+						<pre><code class="kotlin" style="font-size: 18px; tab-size:2">fun result(args: Array&lt;String&gt;) =
+	house {
+		rooms {
+			room {
+				person {+"Lonley"}
+			}
+			room  {
+				person {
+					for (arg in args)
+						+arg
+				}
+		}
+	}</code></pre>
 					</section>
 					<section>
 						<h3>They are dozen of more features</h3>
