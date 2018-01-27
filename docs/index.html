@@ -6,6 +6,7 @@
 
 		<title>reveal.js</title>
 
+		<link rel="Shortcut Icon" href="img/favicon.ico" type="image/x-icon"/>
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 
@@ -167,6 +168,16 @@
 						let's review some of them
 					</section>
 					<section>
+						<h3>Null Safety</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">var a: String = "abc"
+a = null // compilation error
+
+var b: String? = "abc"
+b = null // ok
+
+val l = b?.length ?: -1</code></pre>
+					</section>
+					<section>
 						<h3>Object Oriented</h3>
 						<pre><code class="kotlin" style="font-size: 18px;">class Greeter(val name: String) {
    fun greet() {
@@ -178,16 +189,6 @@ fun main(args: Array&lt;String&gt;) {
    Greeter(args[0]).greet()
 }
 </code></pre>
-					</section>
-					<section>
-						<h3>Null Safety</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">var a: String = "abc"
-a = null // compilation error
-
-var b: String? = "abc"
-b = null // ok
-
-val l = b?.length ?: -1</code></pre>
 					</section>
 					<section>
 						<h3>Type inference</h3>
@@ -239,7 +240,8 @@ data class User(val name: String = "", val age: Int = 0)
 
 val user = User("John", "42")
 val otherUser = User()
-user = user2;
+otherUser = user;
+val olderUser = user.copy(age=50);
 
 val name, age = user;
 </code></pre>
