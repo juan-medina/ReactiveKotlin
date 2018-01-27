@@ -187,8 +187,7 @@ val l = b?.length ?: -1</code></pre>
 
 fun main(args: Array&lt;String&gt;) {
    Greeter(args[0]).greet()
-}
-</code></pre>
+}</code></pre>
 					</section>
 					<section>
 						<h3>Type inference</h3>
@@ -232,19 +231,20 @@ fun main(args : Array&lt;String&gt;) {
 					</section>
 					<section>
 						<h3>Data classes</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">//creates:
-//  - equals() / hashCode()
+						<pre><code class="kotlin" style="font-size: 18px;">//  - equals() / hashCode()
 //  - toString() of the form "User(name=John, age=42)"
 //  - copy()
+//  - componentN() : component1() = name, component2() = age
 data class User(val name: String = "", val age: Int = 0)
 
 val user = User("John", "42")
-val otherUser = User()
-otherUser = user;
 val olderUser = user.copy(age=50);
 
 val name, age = user;
-</code></pre>
+
+fun getUser() = User("John", "42")
+
+val userName, userAge = getUser()</code></pre>
 					</section>
 					<section>
 						<h3>Extensions functions</h3>
@@ -255,9 +255,7 @@ val name, age = user;
 }
 
 val l = mutableListOf(1, 2, 3)
-l.swap(0, 2) // the list will be (3, 2, 1)
-
-</code></pre>
+l.swap(0, 2) // the list will be (3, 2, 1)</code></pre>
 					</section>
 					<section>
 						<h3>Lambdas</h3>
@@ -273,9 +271,7 @@ strings.filter{ it.length == 5 }
 
 strings.filter{it.length == 5}.forEach{ println(it) }
 
-strings.filter{it.length == 5}.forEach(::println}
-
-</code></pre>
+strings.filter{it.length == 5}.forEach(::println}</code></pre>
 					</section>
 					<section>
 						<h3>Type-Safe builders</h3>
