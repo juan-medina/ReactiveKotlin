@@ -258,36 +258,33 @@ l.swap(0, 2) // the list will be (3, 2, 1)</code></pre>
 					</section>
 					<section>
 						<h3>Lambdas</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">strings.filter{
-	value : String -> value.length == 5
-}
+						<pre><code class="kotlin" style="font-size: 18px;">val strings = listOf("hello", "I'm", "a list", "of", "strings")
+
+strings.filter {
+	value : String -> value.length > 3
+}.forEach{ value : String -> println(value) }
 
 strings.filter{
-	value -> value.length == 5
-}
+	value -> value.length > 3
+}.forEach{ value -> println(value) }
 
-strings.filter{ it.length == 5 }
-
-strings.filter{it.length == 5}.forEach{ println(it) }
-
-strings.filter{it.length == 5}.forEach(::println}</code></pre>
+strings.filter { it.length > 3 }.forEach(::println}</code></pre>
 					</section>
 					<section>
 						<h3>Type-Safe builders</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">fun result(args: Array&lt;String&gt;) =
-    html {
-        head {
-            title {+"XML encoding with Kotlin"}
-        }
-        body {
-            p  {+"this format can be used as an alternative markup"}
-
-            p {
-                for (arg in args)
-                    +arg
-            }
-        }
-    }</code></pre>
+						<pre><code class="kotlin" style="font-size: 18px; tab-size:2">fun result(args: Array&lt;String&gt;) =
+	house {
+		rooms {
+			room {
+				person {+"Lonley"}
+			}
+			room  {
+				person {
+					for (arg in args)
+						+arg
+				}
+		}
+	}</code></pre>
 					</section>
 					<section>
 						<h3>They are dozen of more features</h3>
