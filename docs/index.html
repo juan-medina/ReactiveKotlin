@@ -134,9 +134,8 @@
 						<h3>A programming language</h3>
 						<ul>
 							<li>Created by JetBrains</li>
-							<li>Multi porpoise</li>
 							<li>C++/Java looks-like</li>
-							<li>Aims to Simplicity</li>
+							<li>Concise</li>
 							<li>Not a paradigm shift</li>
 							<li>Modern constructs</li>
 							<li>LLVM compiler</li>
@@ -168,6 +167,19 @@
 						let's review some of them
 					</section>
 					<section>
+						<h3>Object Oriented</h3>
+						<pre><code class="kotlin" style="font-size: 18px;">class Greeter(val name: String) {
+   fun greet() {
+      println("Hello, $name")
+   }
+}
+
+fun main(args: Array&lt;String&gt;) {
+   Greeter(args[0]).greet()
+}
+</code></pre>
+					</section>
+					<section>
 						<h3>Null Safety</h3>
 						<pre><code class="kotlin" style="font-size: 18px;">var a: String = "abc"
 a = null // compilation error
@@ -184,14 +196,6 @@ val l = b?.length ?: -1</code></pre>
 val b = 1
 
 val c = getData()</code></pre>
-					</section>
-					<section>
-						<h3>String interpolation</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">val name = "Juan"
-
-println("My name is $name")
-
-println("My name length is ${name.length}"</code></pre>
 					</section>
 					<section>
 						<h3>Single expression functions</h3>
@@ -227,7 +231,18 @@ fun main(args : Array&lt;String&gt;) {
 					</section>
 					<section>
 						<h3>Data classes</h3>
-						<pre><code class="kotlin" style="font-size: 18px;">data class User(val name: String = "", val age: Int = 0)</code></pre>
+						<pre><code class="kotlin" style="font-size: 18px;">//creates:
+//  - equals() / hashCode()
+//  - toString() of the form "User(name=John, age=42)"
+//  - copy()
+data class User(val name: String = "", val age: Int = 0)
+
+val user = User("John", "42")
+val otherUser = User()
+user = user2;
+
+val name, age = user;
+</code></pre>
 					</section>
 					<section>
 						<h3>Extensions functions</h3>
