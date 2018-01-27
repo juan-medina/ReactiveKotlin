@@ -1,0 +1,15 @@
+table.empty td {
+  border-bottom: 0px transparent;
+  vertical-align: middle;
+}
+
+.reveal .slides section .fragment.highlight-yellow,
+.reveal .slides section .fragment.highlight-current-yellow{
+  opacity: 1;
+  visibility: inherit; }
+
+.reveal .slides section .fragment.highlight-yellow.visible {
+  color: #ffff2c; }
+
+.reveal .slides section .fragment.highlight-current-yellow.current-fragment {
+  color: #ffff2c; }
