@@ -489,7 +489,80 @@ strings.filter { it.length > 3 }.forEach(::println)</code></pre>
 					</section>
 
 				</section>
-				<section><h3>Creating a Reactive Microservice</h3></section>
+
+				<section>
+					<section><h3>Creating a Reactive Microservice</h3></section>
+
+					<section>
+						<h3>Prerequisites</h3>
+						<ul>
+							<li>JDK 1.8+</li>
+							<li>MongoDB 3.4+ (running on localhost:27017)</li>
+							<li>Any IDE such: Intellij IDEA Community Edition</li>
+						</ul>
+					</section>
+
+					<section>
+						Spring Imitializr
+						<img src="img/start_spring_io.png">
+						<a href="https://start.spring.io/">https://start.spring.io/</a>
+					</section>
+
+					<section>
+						Our Application
+						<pre><code class="kotlin" style="font-size: 16px;">package com.juan.medina.ReactiveKotlin
+
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+
+@SpringBootApplication
+class ReactiveKotlinApplication
+
+fun main(args: Array&lt;String&gt;) {
+  runApplication&lt;ReactiveKotlinApplication&gt;(*args)
+}</code></pre>
+					</section>
+
+					<section>
+						Run it
+						<pre><code style="font-size: 10px;">$ mvnw spring-boot:run
+INFO 1792 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1}] to localhost:27017
+INFO 1792 --- [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port(s): 8080
+INFO 1792 --- [           main] c.j.m.R.ReactiveKotlinApplicationKt      : Started ReactiveKotlinApplicationKt in 3.351 seconds (JVM running for 3.721)
+</code></pre>
+					</section>
+
+					<section>
+						Customer Class
+						<pre><code class="kotlin" style="font-size: 16px;">package com.juan.medina.ReactiveKotlin
+
+data class Customer(var name : String = "", var telephone : String = "")</code></pre>
+					</section>
+
+					<section>
+						Creating a Router
+						<pre><code class="kotlin" style="font-size: 16px;">@Component
+class CustomerRouter {
+  @Bean
+  fun customerRoutes() = router {
+    "/customer".nest {
+      GET("/{id}", fun(serverRequest: ServerRequest) =
+          ServerResponse.ok().body(fromObject(Customer("hello", "+447801234567"))))
+    }
+  }
+}</code></pre>
+					</section>
+
+					<section>
+						Navigating to our server <a href="http://localhost:8080/customer/1">http://localhost:8080/customer/1</a>
+						<pre><code class="json" style="font-size: 16px;">{
+	"name" : "hello",
+	"telephone" : "+447801234567"
+}</code></pre>
+					</section>
+
+				</section>
+
 				<section align="left"><h1 align="center">Q &amp; A</h1><br/>
 					<a href="https://twitter.com/jamedinatwit"><i class="fab fa-twitter"></i>&nbsp;@JuanMedinaCode</a><br/>
 					<a href="mailto:jamedina@gmail.com"><i class="fa fa-envelope"></i>&nbsp;jamedina@gmail.com</a><br/>
