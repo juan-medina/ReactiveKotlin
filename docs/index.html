@@ -308,7 +308,7 @@ strings.filter { it.length > 3 }.forEach(::println)</code></pre>
 							<li><a href="http://vertx.io/">Eclipse Verte.x</a></li>
 							<li><a href="https://projectreactor.io/">Project Reactor</a></li>
 							<li><a href="http://www.reactive-streams.org/">Reactive Streams</a></li>
-							<li><a href="https://spring.io/">Spring Framework 5.0</a></li>
+							<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html">Spring WebFlux</a></li>
 						</ul>
 						<br/>
 						<br/>
@@ -536,7 +536,7 @@ INFO 1792 --- [           main] c.j.m.R.ReactiveKotlinApplicationKt      : Start
 						Customer Class
 						<pre><code class="kotlin" style="font-size: 16px;">package com.juan.medina.ReactiveKotlin
 
-data class Customer(var name : String = "", var telephone : String = "")</code></pre>
+data class Customer(var id : Int = 0, var name : String = "")</code></pre>
 					</section>
 
 					<section>
@@ -547,7 +547,7 @@ class CustomerRouter {
   fun customerRoutes() = router {
     "/customer".nest {
       GET("/{id}", fun(serverRequest: ServerRequest) =
-          ServerResponse.ok().body(fromObject(Customer("hello", "+447801234567"))))
+          ServerResponse.ok().body(fromObject(Customer(1, "hello"))))
     }
   }
 }</code></pre>
@@ -556,10 +556,145 @@ class CustomerRouter {
 					<section>
 						Navigating to our server <a href="http://localhost:8080/customer/1">http://localhost:8080/customer/1</a>
 						<pre><code class="json" style="font-size: 16px;">{
-	"name" : "hello",
-	"telephone" : "+447801234567"
+	"id" : 1,
+	"name" : "hello"
 }</code></pre>
 					</section>
+
+					<section>
+						Creating a Handler
+						<pre><code class="kotlin" style="font-size: 16px;">@Component
+class CustomerHandler {
+  fun getCustomer(serverRequest: ServerRequest) = serverRequest.pathVariable("id").let {
+    ServerResponse.ok().body(fromObject(Customer(it.toInt(), "customer $it")))
+  }
+}</code></pre>
+					</section>
+
+					<section>
+						Updating the router
+						<pre><code class="kotlin" style="font-size: 16px;">@Component
+class CustomerRouter(val customerHandler: CustomerHandler) {
+  @Bean
+  fun customerRoutes() = router {
+    "/customer".nest {
+      GET("/{id}", customerHandler::getCustomer)
+    }
+  }
+}</code></pre>
+					</section>
+
+
+					<section>
+						Navigating to our server <a href="http://localhost:8080/customer/2">http://localhost:8080/customer/2</a>
+						<pre><code class="json" style="font-size: 16px;">{
+	"id" : 2,
+	"name" : "customer 2"
+}</code></pre>
+					</section>
+
+					<section>
+						Let's take cloose look to our handler
+						<pre><code class="kotlin" style="font-size: 16px;">ServerResponse.ok().body(fromObject(Customer(it.toInt(), "customer $it")))</code></pre>
+						<small>ServerResponse.ok() returns a Mono&lt;ServerResponse&gt;<br/>
+						Mono is a promise of a value, that when is ready will be published<br/>
+						Spring WebFlux will be subscribed to that Mono</small>
+					</section>
+
+					<section>
+						Creating a repository
+						<pre><code class="kotlin" style="font-size: 16px;">@Repository
+class CustomerRepository(private val template: ReactiveMongoTemplate) {
+  companion object {
+    val initialCustomers = listOf(Customer(1, "Kotlin"),
+        Customer(2, "Reactive"),
+        Customer(3, "Microservice"))
+  }
+  @PostConstruct
+  fun initializeRepository() =
+      initialCustomers.map(Customer::toMono).map(this::create).map(Mono&lt;Customer&gt;::subscribe)
+
+  fun create(customer: Mono&lt;Customer&gt;) = template.save(customer)
+  fun findById(id: Int) = template.findById&lt;Customer&gt;(id)
+}</code></pre>
+					</section>
+
+				<section>
+						Updating the handler
+						<pre><code class="kotlin" style="font-size: 16px;">@Component
+class CustomerHandler(val customerRepository: CustomerRepository) {
+  fun getCustomer(serverRequest: ServerRequest) = customerRepository
+      .findById(serverRequest.pathVariable("id").toInt())
+      .flatMap { ServerResponse.ok().body(fromObject(it)) }
+}</code></pre>
+					</section>
+
+					<section>
+						Navigating to our server <a href="http://localhost:8080/customer/3">http://localhost:8080/customer/3</a>
+						<pre><code class="json" style="font-size: 16px;">{
+	"id" : 3,
+	"name" : "Microservice"
+}</code></pre>
+					</section>
+
+					<section>
+						Adding get all customers to our repository
+						<pre><code class="kotlin" style="font-size: 16px;">@Repository
+class CustomerRepository(private val template: ReactiveMongoTemplate) {
+  companion object {
+    val initialCustomers = listOf(Customer(1, "Kotlin"),
+        Customer(2, "Reactive"),
+        Customer(3, "Microservice"))
+  }
+  @PostConstruct
+  fun initializeRepository() =
+      initialCustomers.map(Customer::toMono).map(this::create).map(Mono&lt;Customer&gt;::subscribe)
+  fun create(customer: Mono&lt;Customer&gt;) = template.save(customer)
+  fun findById(id: Int) = template.findById&lt;Customer&gt;(id)
+  fun getAll() = template.findAll&lt;Customer&gt;()
+}</code></pre>
+					</section>
+
+<section>
+						Mono vs Flux
+						<pre><code class="kotlin" style="font-size: 16px;">fun findById(id: Int) = template.findById&lt;Customer&gt;(id)
+fun getAll() = template.findAll&lt;Customer&gt;()</code></pre>
+						<small><i>template.findbyId</i> returns a Mono&lt;Customer&gt;<br/>
+						<i>template.findAll</i> returns a Flux&lt;Customer&gt;<br/>
+						<br/>
+						A Flux is a promise of multiple values that they will be published when ready</small>
+					</section>
+
+					<section>
+						Completing our handler
+						<pre><code class="kotlin" style="font-size: 16px;">@Component
+class CustomerHandler(val customerRepository: CustomerRepository) {
+  fun getCustomer(serverRequest: ServerRequest) = customerRepository
+      .findById(serverRequest.pathVariable("id").toInt())
+      .flatMap { ServerResponse.ok().body(fromObject(it)) }
+
+  fun getAllCustomers(serverRequest: ServerRequest) = ServerResponse.ok()
+      .body&lt;Customer&gt;(customerRepository.getAll())
+}</code></pre>
+					</section>
+
+					<section>
+						Navigating to our server <a href="http://localhost:8080/customer">http://localhost:8080/customer</a>
+						<pre><code class="json" style="font-size: 16px;">[
+	{"id": 1, "name" : "Kotlin"},
+	{"id": 2, "name" : "Reactive"},
+	{"id": 3, "name" : "Microservice"}
+]</code></pre>
+					</section>
+					<section>
+
+					<h3>Now we have a reactive REST API</h3>
+					that uses MongoDB reactively<br/>
+					<br/>
+					<small>This complete examplee and the presentation is available at <br/>
+						<a href="https://github.com/juan-medina/ReactiveKotlin">https://github.com/juan-medina/ReactiveKotlin</a></small>
+					</section>
+
 
 				</section>
 
