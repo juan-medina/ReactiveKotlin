@@ -478,9 +478,16 @@ strings.filter { it.length > 3 }.forEach(::println)</code></pre>
 							<ul>
 								<li>The client get data as soon as is available</li>
 								<li>We could process far more requests</li>
+								<li>Client and server are free to other tasks</li>
 								<li>This is a non-blocking operation</li>
 							</ul>
 						</span>
+					</section>
+
+					<section>
+						Raw performance Spring Boot 1 vs 2
+						<img src="img/Boot1VsBoot2.png"/><br/>
+						<a href="https://dzone.com/articles/raw-performance-numbers-spring-boot-2-webflux-vs-s">https://dzone.com/articles/raw-performance-numbers-spring-boot-2-webflux-vs-s</a>
 					</section>
 
 					<section>
