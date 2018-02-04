@@ -38,7 +38,7 @@
 				<section>
 					<section>
 					<h3>Hello, I'm Juan Medina</h3>
-					and I'm a Software engineer
+					a software engineer that just release a book about creating Microservices in Kotlin
 					</section>
 					<section>
 					<h3>I've been coding since I was 10</h3>
@@ -130,12 +130,14 @@
 				</section>
 				<section>
 					<section>
-						<h3>What is Kotlin?</h3>
+						<h3>Why a book about Kotlin?</h3>
 					</section>
 					<section>
-						<h3>A programming language</h3>
+						<h3>What is Kotlin</h3>
 						<ul>
+							<li>A programming language</li>
 							<li>Created by JetBrains</li>
+							<li>Strong Typed</li>
 							<li>C++/Java looks-like</li>
 							<li>Concise</li>
 							<li>Not a paradigm shift</li>
@@ -193,10 +195,19 @@ fun main(args: Array&lt;String&gt;) {
 					<section>
 						<h3>Type inference</h3>
 						<pre><code class="kotlin" style="font-size: 18px;">val a = "abc"
-
 val b = 1
 
-val c = getData()</code></pre>
+fun getData() : String {
+	return "hello world"
+}
+
+val c = getData()
+print(c) // will print "hello world"
+
+fun getData() : Customer {
+	return Customer(1, "super customer") //a class that have id, name
+}
+print(c) // will print "Customer(id=1, name=super customer)"</code></pre>
 					</section>
 					<section>
 						<h3>Single expression functions</h3>
@@ -291,6 +302,82 @@ strings.filter { it.length > 3 }.forEach(::println)</code></pre>
 					<section>
 						<h3>They are dozen of more features</h3>
 						for more details visit: <a target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a>
+					</section>
+					<section>
+						<h3>Kotlin vs Java</h3>
+						<small><a href="https://juan-medina.com/2017/06/04/reactive-kotlin-vs-java/" target="_blank">https://juan-medina.com/2017/06/04/reactive-kotlin-vs-java/</a><br/></small>
+							<br/>
+							Comparing two identical projects:<br/>
+						<small>
+							<ul>
+								<li>
+									Java: <a href="https://github.com/LearningByExample/reactive-ms-example" target="_blank">https://github.com/LearningByExample/reactive-ms-example</a>
+								</li>
+								<li>
+									Kotlin: <a href="https://github.com/LearningByExample/KotlinReactiveMS" target="_blank"/>https://github.com/LearningByExample/KotlinReactiveMS</a>
+								</li>
+							</ul>
+						</small>
+					</section>
+					<section>
+						<table>
+							<tr>
+								<th>Lines of Code</th>
+								<th>Source</th>
+								<th>Tests</th>
+							</tr>
+							<tr>
+								<td>Java</td>
+								<td>1004</td>
+								<td>1172</td>
+							</tr>
+							<tr>
+								<td>Kotlin</td>
+								<td>721</td>
+								<td>1017</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<table>
+							<tr>
+								<th>Complexity</th>
+								<th>Max</th>
+							</tr>
+							<tr>
+								<td>Java</td>
+								<td>45</td>
+							</tr>
+							<tr>
+								<td>Kotlin</td>
+								<td>8</td>
+							</tr>
+						</table>
+						<small align="right">reported by <a href="https://codebeat.co" target="_blank">https://codebeat.co</a></small>
+					</section>
+					<section>
+						<small>createResult() Java vs Kotlin</small>
+						<pre><code class="java" style="font-size: 12px; tab-size:2">  Mono&lt;SunriseSunset&gt; createResult(final Mono&lt;GeoTimesResponse&gt; geoTimesResponseMono) {
+      return geoTimesResponseMono.flatMap(geoTimesResponse -> {
+          if ((geoTimesResponse.getStatus() != null) &amp;&amp; (geoTimesResponse.getStatus()
+              .equals(STATUS_OK))) {
+              return Mono.just(new SunriseSunset(geoTimesResponse.getResults().getSunrise(),
+                      geoTimesResponse.getResults().getSunset()));
+          } else {
+              return Mono.error(new GetSunriseSunsetException(SUNRISE_RESULT_NOT_OK));
+          }
+      });
+  }</code></pre>
+						<pre><code class="kotlin" style="font-size: 12px; tab-size:2">  open internal fun createResult(geoTimesResponseMono: Mono&lt;GeoTimesResponse&gt;) =
+    geoTimesResponseMono.flatMap {
+        with(it){
+            if (status == STATUS_OK) with(results) { SunriseSunset(sunrise, sunset).toMono() }
+            else GetSunriseSunsetException(SUNRISE_RESULT_NOT_OK).toMono()
+        }
+    }</code></pre>
+					</section>
+					<section>
+						<blockquote><small>Kotlin is not only about shorten code, is about reducing the boilerplate, make it comprehensible, and easy to maintain<br/><br/>And as a bonus I can take my code to other platforms</small></blockquote>
 					</section>
 				</section>
 				<section>
