@@ -652,13 +652,22 @@ fun getAll() = template.findAll&lt;Customer&gt;()</code></pre>
 						Creating a Handler
 						<pre><code class="kotlin" style="font-size: 16px;">@Component
 class CustomerHandler(val customerRepository: CustomerRepository) {
-  fun getCustomer(serverRequest: ServerRequest) = customerRepository
-      .findById(serverRequest.pathVariable("id").toInt())
-      .flatMap { ServerResponse.ok().body(fromObject(it)) }
+  fun getCustomer(serverRequest: ServerRequest) = ServerResponse.ok()
+      .body&lt;Customer&gt;(customerRepository.findById(serverRequest.pathVariable("id").toInt()))
 
   fun getAllCustomers(serverRequest: ServerRequest) = ServerResponse.ok()
       .body&lt;Customer&gt;(customerRepository.getAll())
 }</code></pre>
+					</section>
+
+					<section>
+						Everything is reactive
+						<pre><code class="kotlin" style="font-size: 16px;">ServerResponse.ok().body&lt;Customer&gt;(Mono&lt;Customer&gt;)
+ServerResponse.ok().body&lt;Customer&gt;(Flux&lt;Customer&gt;)</code></pre>
+						<small><i>ServerResponse.ok().body</i> returns a Mono&lt;ServerResponse&gt;<br/>
+						that <i>Mono&lt;ServerResponse&gt;</i> is subscribed to a Mono&lt;Customer&gt; or Flux&lt;Customer&gt;<br/>
+						<br/>
+						WebFlux will be subscribed to the Mono&lt;ServerResponse&gt;, a promise of a response that is subscribed to a promise of results of the database</small>
 					</section>
 
 					<section>
